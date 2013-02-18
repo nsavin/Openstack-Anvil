@@ -252,19 +252,3 @@ class KeystoneRuntime(comp.PythonRuntime):
         ]
 
 
-class KeystoneTester(comp.PythonTestingComponent):
-    # TODO(harlowja) these should probably be bugs...
-    def _get_test_exclusions(self):
-        return [
-            # These 2 seem to require swift, not always installed...
-            'test_swift_auth_middleware',
-            'test_s3_token_middleware',
-            # Aren't always installing memcache...
-            'test_backend_memcache',
-            # Oddness: 'unable to access signing dir /root/keystone-signing'
-            'test_nomemcache',
-            # Aren't always installing ldap...
-            'test_backend_ldap',
-            # failing while testing with folsom during CI build, not sure why
-            'test_keystoneclient',
-        ]

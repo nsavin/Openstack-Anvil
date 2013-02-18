@@ -801,17 +801,12 @@ class EmptyTestingComponent(component.Component):
 
 
 class PythonTestingComponent(component.Component):
-    def _get_test_exclusions(self):
-        return []
-    
-    def _use_run_tests(self):
-        return True
     
     def _get_test_command(self):
         # See: http://docs.openstack.org/developer/nova/devref/unit_tests.html
         # And: http://wiki.openstack.org/ProjectTestingInterface
         app_dir = self.get_option('app_dir')
-        if sh.isfile(sh.joinpths(app_dir, 'run_tests.sh')) and self._use_run_tests():
+        if sh.isfile(sh.joinpths(app_dir, 'run_tests.sh')) and not self.get_options('test_nosetests'):
             cmd = [sh.joinpths(app_dir, 'run_tests.sh'), '-N', '-P']
         else:
             # Assume tox is being used, which we can't use directly
@@ -819,8 +814,11 @@ class PythonTestingComponent(component.Component):
             cmd = ['nosetests']
         # See: $ man nosetests
         cmd.append('--nologcapture')
-        for e in self._get_test_exclusions():
-            cmd.append('--exclude=%s' % (e))
+        for e in self.get_option('test_exclusion'):
+            if e[-1] == '/':
+                cmd.append('--exclude_dir=%s' % (e))
+            else:
+                cmd.append('--exclude=%s' % (e))
         xunit_fn = self.get_option("xunit_filename")
         if self.get_option("test_coverage"):
             cmd.append("--with-coverage")

@@ -337,11 +337,3 @@ class NovaRuntime(comp.PythonRuntime):
 
     def app_options(self, app):
         return ['--config-file', '$CFG_FILE']
-
-
-class NovaTester(comp.PythonTestingComponent):
-    def _get_test_exclusions(self):
-        return [
-            # Disable since quantumclient is not always installed.
-            'test_quantumv2',
-        ]

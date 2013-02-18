@@ -11,4 +11,6 @@ patches:
     # which appears in all clients
     - "conf/patches/glance-client/fix-tag-version.patch"
 
+test_exclusion: [ test_ssl_cert_mismatch, test_ssl_cert_subject_alt_name ]
+
 ...

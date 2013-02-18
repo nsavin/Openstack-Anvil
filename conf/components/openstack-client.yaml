@@ -3,4 +3,5 @@
 
 get_from: "git://github.com/openstack/python-openstackclient.git?branch=master"
 
+test_nosetests: true
 ...

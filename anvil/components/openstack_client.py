@@ -29,7 +29,3 @@ class OpenStackClientInstaller(comp.PythonInstallComponent):
             return None
         return line
 
-
-class OpenStackClientTester(comp.PythonTestingComponent):
-    def _use_run_tests(self):
-        return False

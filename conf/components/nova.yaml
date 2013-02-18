@@ -149,4 +149,5 @@ rabbit:
   user_id: "$(rabbit-mq:user_id)"
   host: "$(rabbit-mq:host)"
 
+test_exclusion: test_quantumv2
 ...

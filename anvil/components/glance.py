@@ -254,23 +254,3 @@ class GlanceRuntime(comp.PythonRuntime):
                 params['cache_dir'] = cache_dir
             ghelper.UploadService(**params).install(self._get_image_urls())
 
-
-class GlanceTester(comp.PythonTestingComponent):
-    # TODO(harlowja) these should probably be bugs...
-    def _get_test_exclusions(self):
-        return [
-            # These seem to require swift, not always installed...
-            'test_swift_store',
-        ]
-
-    # NOTE: redefining method as run_tests doesn't support exclude
-    def _get_test_command(self):
-        # See: $ man nosetests
-        #
-        # It seems to assume tox is being used, which we can't use directly
-        # since anvil doesn't really do venv stuff (its meant to avoid those...)
-        cmd = ['nosetests','--exclude-dir=glance/tests/functional',
-               '--with-coverage','--cover-package=glance']
-        for e in self._get_test_exclusions():
-            cmd.append('--exclude=%s' % (e))
-        return cmd
