@@ -254,7 +254,7 @@ def fileperms(path):
     return (os.stat(path).st_mode & 0777)
 
 
-def listdir(path, recursive=False, dirs_only=False, files_only=False):
+def listdir(path, recursive=False, dirs_only=False, files_only=False, sort=False):
     path = abspth(path)
     all_contents = []
     if not recursive:
@@ -270,6 +270,8 @@ def listdir(path, recursive=False, dirs_only=False, files_only=False):
         all_contents = [f for f in all_contents if isdir(f)]
     if files_only:
         all_contents = [f for f in all_contents if isfile(f)]
+    if sort:
+        all_contents.sort()
     return all_contents
 
 
